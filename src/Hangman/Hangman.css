@@ -1,0 +1,38 @@
+#abc-tiles {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.gameState {
+font-size: 20px;
+color: floralwhite;
+}
+
+.Hangman-word {
+    margin-left: 10px;
+    font-size: 2.5em;
+    color: floralwhite;
+    text-shadow: 1px 1px black;
+}
+
+
+.lives-score,
+.win-score,
+.loss-score,
+.timer {
+    margin-left: 10px;
+    font-size: 1.2em;
+    color: salmon;
+    text-shadow: 1px 1px black;
+}
+
+#dom-update {
+    padding-top: 30px;
+    font-size: 2em;
+    color: salmon;
+    text-shadow: 3px 3px black;
+}
+
+img[disabled] {
+    opacity: 0.60;
+}
