@@ -1,8 +1,10 @@
+
 import React, { Component } from "react";
 import { randomWord } from "./words";
 import ClueBttn from '../components/ClueBttn/';
 import Timer from '../components/Timer';
 import "./Hangman.css";
+import ReactStopwatch from 'react-stopwatch';
 
 
 
@@ -22,6 +24,7 @@ class Hangman extends Component {
       seconds: 0,
       wins: 0,
       losses: 0,
+      endGame: false
     };
     this.handleGuess = this.handleGuess.bind(this);
     this.reset = this.reset.bind(this);
@@ -36,13 +39,15 @@ class Hangman extends Component {
       gameWord: randomWord(),
       seconds: 0,
       losses: test ? st.losses += 1 : st.losses,
-      wins: test ? st.wins : st.wins += 1
+      wins: test ? st.wins : st.wins += 1,
+      endGame: false
     }));
   }
 
 
 
   gameArr() {
+
     return this.state.gameWord
       .split("")
       .map(ltr => (this.state.guessed.has(ltr) ? ltr : "blank"))
@@ -84,6 +89,7 @@ class Hangman extends Component {
   generateABCtiles() {
     console.log(this.state.gameWord);
     console.log(this.state.guessed);
+
     return "abcdefghijklmnopqrstuvwxyz".split("").map(letter => (
       <img src={`./images/${letter}-title.jpg`}
         onClick={this.handleGuess} className="letter abc-tiles"
@@ -94,6 +100,7 @@ class Hangman extends Component {
   }
 
   randomAbcTiles() {
+   
     //shuffling thru the array to make ABC tiles random 
     return this.generateABCtiles().map((a) => ({
       sort: Math.random(),
@@ -104,28 +111,6 @@ class Hangman extends Component {
     //console.log(randArr)
   }
 
-
-
-  // startTimer(){
-
-  //     setInterval(() => {
-  //       console.log(this.state.seconds)
-
-  //         this.setState({
-  //           seconds: this.state.seconds + 1
-  //         });
-  //     }, 1000);
-  //   }
-
-    // componentDidMount() {
-    //   console.log("DidMount", this.state.seconds);
-    //   this.startTimer()
-    // }
-
-  //   componentWillUnmount() {
-  //     console.log("WillUnmount");
-  //     clearInterval(this.interval);
-  //   }
 
   win() {
     console.log("ran in time");
@@ -143,18 +128,37 @@ class Hangman extends Component {
     if (notWinner === false) gameState = "You win!";
     if (gameOver) gameState = "You Lose!";
 
+    console.log(gameOver);
 
 
     return (
+     
       <div className="landing--title">
         <h1>Movie Scrabble Hangman!</h1> <br />
         <p>Click a letter</p><br />
-
+        {console.log(gameOver)}
         <div className="row">
           <div className="col-md-4">
             <h2>Number of Lives: <span className="lives-score"> {this.props.maxWrong - this.state.nWrong} </span> </h2>
           </div>
-          <Timer seconds={this.state.seconds} />
+
+          <ReactStopwatch seconds={0} minutes={0} hours={0}
+            onChange={({ hours, minutes, seconds }) => {
+              // do something
+              //console.log("hi bk");
+              
+            }}
+            onCallback={() => console.log('Finish')}
+            render={({ formatted, hours, minutes, seconds }) => {
+              return (
+                <div className="col-md-4">
+                  <h2>
+                    Timer: <span className="timer" id="timer">{formatted} </span>
+                  </h2>
+                </div>
+              );
+            }}
+          />
 
           {/* <Timer seconds={(this.state.seconds >= 0) ? this.startTimer : this.state.seconds } /> */}
 
@@ -175,7 +179,8 @@ class Hangman extends Component {
           <h2 id="dom-update"> </h2>
 
           <div id="abc-tiles"><h2 className="gameState">{gameState}</h2></div>
-          <ClueBttn /> <br /> <br />
+          <ClueBttn word={this.state.gameWord} gameOver={gameOver}/> <br /> <br />
+          {console.log(gameOver)}
           <button id="reset-game" className="primary-btn" onClick={this.reset} type="button">Reset Game</button>
           <div className="landing--line"> </div>
           <br /> <br />
