@@ -100,7 +100,7 @@ class Hangman extends Component {
   }
 
   randomAbcTiles() {
-   
+
     //shuffling thru the array to make ABC tiles random 
     return this.generateABCtiles().map((a) => ({
       sort: Math.random(),
@@ -132,7 +132,7 @@ class Hangman extends Component {
 
 
     return (
-     
+
       <div className="landing--title">
         <h1>Movie Scrabble Hangman!</h1> <br />
         <p>Click a letter</p><br />
@@ -146,7 +146,7 @@ class Hangman extends Component {
             onChange={({ hours, minutes, seconds }) => {
               // do something
               //console.log("hi bk");
-              
+
             }}
             onCallback={() => console.log('Finish')}
             render={({ formatted, hours, minutes, seconds }) => {
@@ -179,7 +179,7 @@ class Hangman extends Component {
           <h2 id="dom-update"> </h2>
 
           <div id="abc-tiles"><h2 className="gameState">{gameState}</h2></div>
-          <ClueBttn word={this.state.gameWord} gameOver={gameOver}/> <br /> <br />
+          <ClueBttn word={this.state.gameWord} gameOver={gameOver} /> <br /> <br />
           {console.log(gameOver)}
           <button id="reset-game" className="primary-btn" onClick={this.reset} type="button">Reset Game</button>
           <div className="landing--line"> </div>
